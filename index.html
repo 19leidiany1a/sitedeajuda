@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DiaLeve - Protótipo de App de Estudos sem Sobrecarga</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0f7ff',
+                            100: '#e0effe',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                        },
+                        teal: {
+                            400: '#2dd4bf',
+                            500: '#14b8a6',
+                        },
+                        calm: {
+                            bg: '#0f172a',
+                            card: '#1e293b',
+                            accent: '#6366f1'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom scrollbar and animations */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569;
+        }
+        
+        .glass-card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .phone-mockup {
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7), 0 0 30px rgba(99, 102, 241, 0.2);
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 font-sans antialiased selection:bg-indigo-500 selection:text-white">
+
+    <!-- Navigation Bar -->
+    <nav class="fixed top-0 left-0 w-full z-50 glass-card border-b border-slate-800/80 bg-slate-950/80 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center space-x-3">
+                    <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-500 to-teal-400 flex items-center justify-center shadow-lg shadow-indigo-500/30">
+                        <i class="fa-solid font-bold text-white text-lg fa-feather"></i>
+                    </div>
+                    <span class="font-bold text-xl tracking-tight bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent">DiaLeve</span>
+                    <span class="text-xs bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 px-2 py-0.5 rounded-full font-medium">Protótipo</span>
+                </div>
+                
+                <!-- Desktop Nav -->
+                <div class="hidden md:flex items-center space-x-6 text-sm font-medium">
+                    <a href="#problema" class="text-slate-300 hover:text-indigo-400 transition-colors">O Problema</a>
+                    <a href="#persona" class="text-slate-300 hover:text-indigo-400 transition-colors">A Persona</a>
+                    <a href="#solucao" class="text-slate-300 hover:text-indigo-400 transition-colors">A Solução</a>
+                    <a href="#prototipo" class="text-slate-300 hover:text-indigo-400 transition-colors">Rascunho Interativo</a>
+                    <a href="#validacao" class="bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 rounded-lg transition-all shadow-md shadow-indigo-600/30 hover:shadow-indigo-500/50">Teste de Validação</a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-slate-300 hover:text-white p-2">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobile-menu" class="hidden md:hidden bg-slate-900 border-b border-slate-800 px-4 pt-2 pb-4 space-y-3">
+            <a href="#problema" class="block text-slate-300 hover:text-indigo-400 py-1">O Problema</a>
+            <a href="#persona" class="block text-slate-300 hover:text-indigo-400 py-1">A Persona</a>
+            <a href="#solucao" class="block text-slate-300 hover:text-indigo-400 py-1">A Solução</a>
+            <a href="#prototipo" class="block text-slate-300 hover:text-indigo-400 py-1">Rascunho Interativo</a>
+            <a href="#validacao" class="block text-indigo-400 font-semibold py-1">Teste de Validação</a>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <header class="pt-32 pb-20 md:pt-40 md:pb-28 relative overflow-hidden">
+        <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-indigo-600/15 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute top-1/3 right-10 w-[300px] h-[300px] bg-teal-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 text-center relative z-10">
+            <!-- Problem Tags -->
+            <div class="inline-flex flex-wrap justify-center gap-2 mb-6">
+                <span class="text-xs bg-slate-800/80 text-slate-300 border border-slate-700/60 px-3 py-1 rounded-full"><i class="fa-solid fa-triangle-exclamation text-amber-400 mr-1.5"></i> Sobrecarga Mental</span>
+                <span class="text-xs bg-slate-800/80 text-slate-300 border border-slate-700/60 px-3 py-1 rounded-full"><i class="fa-solid fa-clock text-rose-400 mr-1.5"></i> Acúmulo de Tarefas</span>
+                <span class="text-xs bg-slate-800/80 text-slate-300 border border-slate-700/60 px-3 py-1 rounded-full"><i class="fa-solid fa-bed text-teal-400 mr-1.5"></i> Abandono do Sono</span>
+            </div>
+
+            <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight leading-tight mb-6 bg-gradient-to-r from-white via-slate-100 to-indigo-200 bg-clip-text text-transparent">
+                Estude com clareza,<br class="hidden sm:inline"> sem destruir seu bem-estar.
+            </h1>
+            
+            <p class="text-lg sm:text-xl text-slate-400 max-w-3xl mx-auto mb-10 leading-relaxed">
+                Estudantes perdem tempo e energia com o acúmulo diário de atividades didáticas, resultando na sensação de descontrole e ansiedade. O <strong class="text-indigo-300 font-semibold">DiaLeve</strong> é um conceito criado para fatiar demandas e devolver a paz à rotina acadêmica.
+            </p>
+
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="#prototipo" class="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-indigo-600 to-indigo-500 hover:from-indigo-500 hover:to-indigo-400 text-white font-semibold rounded-xl shadow-lg shadow-indigo-600/30 hover:shadow-indigo-500/50 transition-all flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-mobile-screen"></i> Ver Protótipo Interativo
+                </a>
+                <a href="#validacao" class="w-full sm:w-auto px-8 py-4 bg-slate-800/80 hover:bg-slate-800 text-slate-200 border border-slate-700 font-semibold rounded-xl transition-all flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-vial"></i> Testar Conceito (5 Pergs)
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- SECTION: O PROBLEMA REAL -->
+    <section id="problema" class="py-20 border-t border-slate-800/60 bg-slate-900/40 relative">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-xs uppercase font-bold tracking-widest text-indigo-400 mb-2">Análise do Problema</h2>
+                <h3 class="text-3xl sm:text-4xl font-bold text-white">A Bola de Neve do Acúmulo Didático</h3>
+                <p class="text-slate-400 mt-3 max-w-2xl mx-auto">
+                    Entender a causa raiz antes de criar soluções. O problema não é falta de força de vontade, mas o colapso dos métodos tradicionais de organização.
+                </p>
+            </div>
+
+            <!-- Problem Cards Grid -->
+            <div class="grid md:grid-cols-3 gap-6 mb-12">
+                <!-- Card 1 -->
+                <div class="glass-card p-6 rounded-2xl border-indigo-500/20 hover:border-indigo-500/40 transition-all">
+                    <div class="w-12 h-12 rounded-xl bg-indigo-500/10 border border-indigo-500/30 flex items-center justify-center text-indigo-400 text-xl font-bold mb-4">
+                        <i class="fa-solid fa-layer-group"></i>
+                    </div>
+                    <div class="flex items-center justify-between mb-2">
+                        <h4 class="text-lg font-bold text-white">Frequência Alta</h4>
+                        <span class="text-xs px-2.5 py-1 bg-amber-500/10 text-amber-400 border border-amber-500/20 rounded-full font-bold">Nota 5/5</span>
+                    </div>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        Acomete quase a totalidade dos estudantes do ensino médio e vestibulandos. Professores passam demandas sem coordenação entre disciplinas.
+                    </p>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="glass-card p-6 rounded-2xl border-rose-500/20 hover:border-rose-500/40 transition-all">
+                    <div class="w-12 h-12 rounded-xl bg-rose-500/10 border border-rose-500/30 flex items-center justify-center text-rose-400 text-xl font-bold mb-4">
+                        <i class="fa-solid fa-heart-pulse"></i>
+                    </div>
+                    <div class="flex items-center justify-between mb-2">
+                        <h4 class="text-lg font-bold text-white">Impacto Severo</h4>
+                        <span class="text-xs px-2.5 py-1 bg-rose-500/10 text-rose-400 border border-rose-500/20 rounded-full font-bold">Nota 5/5</span>
+                    </div>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        Causa noites de sono perdidas, estresse crônico e a sensação constante de "estar em dívida". O aprendizado vira apenas "cumprir tabela".
+                    </p>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="glass-card p-6 rounded-2xl border-teal-500/20 hover:border-teal-500/40 transition-all">
+                    <div class="w-12 h-12 rounded-xl bg-teal-500/10 border border-teal-500/30 flex items-center justify-center text-teal-400 text-xl font-bold mb-4">
+                        <i class="fa-solid fa-compass"></i>
+                    </div>
+                    <div class="flex items-center justify-between mb-2">
+                        <h4 class="text-lg font-bold text-white">Clareza do Ponto</h4>
+                        <span class="text-xs px-2.5 py-1 bg-teal-500/10 text-teal-400 border border-teal-500/20 rounded-full font-bold">Nota 4.5/5</span>
+                    </div>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        O problema é bem delimitado: listas infinitas paralisam a tomada de decisão no momento exato em que o aluno senta para estudar.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Cycle Box -->
+            <div class="glass-card p-8 rounded-2xl border-slate-700/50 bg-gradient-to-br from-slate-900 via-slate-900/90 to-indigo-950/30">
+                <h4 class="text-xl font-bold text-white mb-6 flex items-center gap-2">
+                    <i class="fa-solid fa-arrows-spin text-indigo-400"></i> O Círculo Vicioso do Acúmulo
+                </h4>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                    <div class="p-4 rounded-xl bg-slate-800/50 border border-slate-700/50">
+                        <span class="text-2xl font-bold text-indigo-400 block mb-1">01</span>
+                        <h5 class="text-sm font-semibold text-white mb-1">Múltiplos Prazos</h5>
+                        <p class="text-xs text-slate-400">Trabalhos e provas coincidem no mesmo final de semana.</p>
+                    </div>
+                    <div class="p-4 rounded-xl bg-slate-800/50 border border-slate-700/50">
+                        <span class="text-2xl font-bold text-amber-400 block mb-1">02</span>
+                        <h5 class="text-sm font-semibold text-white mb-1">Paralisia por Análise</h5>
+                        <p class="text-xs text-slate-400">Tantas tarefas que o estudante não sabe por onde começar.</p>
+                    </div>
+                    <div class="p-4 rounded-xl bg-slate-800/50 border border-slate-700/50">
+                        <span class="text-2xl font-bold text-rose-400 block mb-1">03</span>
+                        <h5 class="text-sm font-semibold text-white mb-1">Estudo de Madrugada</h5>
+                        <p class="text-xs text-slate-400">Troca de horas de sono por leitura de última hora.</p>
+                    </div>
+                    <div class="p-4 rounded-xl bg-slate-800/50 border border-slate-700/50">
+                        <span class="text-2xl font-bold text-purple-400 block mb-1">04</span>
+                        <h5 class="text-sm font-semibold text-white mb-1">Cansaço Crônico</h5>
+                        <p class="text-xs text-slate-400">Rendimento reduzido no dia seguinte, reiniciando o ciclo.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION: A PERSONA LUCAS -->
+    <section id="persona" class="py-20 border-t border-slate-800/60 relative">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-xs uppercase font-bold tracking-widest text-indigo-400 mb-2">Nossa Persona de Referência</h2>
+                <h3 class="text-3xl sm:text-4xl font-bold text-white">Conheça o Lucas, 17 anos</h3>
+                <p class="text-slate-400 mt-3 max-w-2xl mx-auto">
+                    Representação criada a partir de pesquisas com estudantes enfrentando vestibular e último ano escolar.
+                </p>
+            </div>
+
+            <div class="grid lg:grid-cols-12 gap-8 items-stretch">
+                <!-- Persona Info Card -->
+                <div class="lg:col-span-5 glass-card p-8 rounded-2xl border-indigo-500/20 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center space-x-4 mb-6">
+                            <div class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-indigo-500 to-teal-400 flex items-center justify-center text-2xl font-extrabold text-white shadow-lg">
+                                L
+                            </div>
+                            <div>
+                                <h4 class="text-2xl font-bold text-white">Lucas</h4>
+                                <p class="text-indigo-400 text-sm font-medium">3º Ano Ensino Médio / Vestibulando</p>
+                                <p class="text-slate-400 text-xs">Curitiba, PR</p>
+                            </div>
+                        </div>
+
+                        <div class="space-y-4 text-sm text-slate-300">
+                            <div class="p-3 rounded-lg bg-slate-800/50 border border-slate-700/50">
+                                <strong class="text-white block mb-0.5"><i class="fa-solid fa-bullseye text-indigo-400 mr-2"></i>Objetivo:</strong>
+                                Entrar na faculdade de Engenharia sem colapsar a saúde física e mental.
+                            </div>
+                            <div class="p-3 rounded-lg bg-slate-800/50 border border-slate-700/50">
+                                <strong class="text-white block mb-0.5"><i class="fa-solid fa-bolt text-amber-400 mr-2"></i>Maior Frustração:</strong>
+                                Sentir que estuda o dia inteiro, mas nunca sai do lugar ou conclui pendências.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 pt-6 border-t border-slate-800">
+                        <span class="text-xs text-slate-400 uppercase font-semibold tracking-wider block mb-3">Tentativas Anteriores Falhas:</span>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="text-xs bg-rose-500/10 text-rose-300 border border-rose-500/20 px-2.5 py-1 rounded-md">Agenda Papel (Abandonada)</span>
+                            <span class="text-xs bg-rose-500/10 text-rose-300 border border-rose-500/20 px-2.5 py-1 rounded-md">Listas de Tarefas Infinitas</span>
+                            <span class="text-xs bg-rose-500/10 text-rose-300 border border-rose-500/20 px-2.5 py-1 rounded-md">Cronogramas Rígidos</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Emotions & Impacts -->
+                <div class="lg:col-span-7 space-y-6">
+                    <div class="glass-card p-6 rounded-2xl border-slate-800">
+                        <h4 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                            <i class="fa-solid fa-face-frown text-rose-400"></i> Emoções Predominantes no Dia a Dia
+                        </h4>
+                        <div class="grid sm:grid-cols-2 gap-4">
+                            <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800">
+                                <span class="font-semibold text-rose-400 text-sm block mb-1"><i class="fa-solid fa-circle-exclamation mr-1"></i> Culpa Constante</span>
+                                <p class="text-xs text-slate-400">Se está descansando ou jogando, sente que deveria estar estudando.</p>
+                            </div>
+                            <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800">
+                                <span class="font-semibold text-amber-400 text-sm block mb-1"><i class="fa-solid fa-spinner mr-1"></i> Paralisia de Decisão</span>
+                                <p class="text-xs text-slate-400">Abre o caderno, vê 10 tarefas acumuladas e trava por não saber a prioridade.</p>
+                            </div>
+                            <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800">
+                                <span class="font-semibold text-indigo-400 text-sm block mb-1"><i class="fa-solid fa-brain mr-1"></i> Esgotamento Cognitivo</span>
+                                <p class="text-xs text-slate-400">Chega à noite sem energia mental para fixar novos conceitos.</p>
+                            </div>
+                            <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800">
+                                <span class="font-semibold text-teal-400 text-sm block mb-1"><i class="fa-solid fa-shield-cat mr-1"></i> Modo Apagar Incêndio</span>
+                                <p class="text-xs text-slate-400">Apenas faz as coisas na véspera para não ficar com nota zero.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card p-6 rounded-2xl border-slate-800 bg-gradient-to-r from-indigo-950/20 to-slate-900">
+                        <blockquote class="text-slate-300 italic text-sm leading-relaxed mb-3">
+                            "Eu crio um planejamento bonito na segunda-feira. Na terça, o professor passa um trabalho surpresa de Biologia e pronto: meu cronograma inteiro vai por água abaixo e fico desesperado."
+                        </blockquote>
+                        <p class="text-xs text-slate-500 text-right">— Depoimento base da Persona</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION: A SOLUÇÃO CONCEITUAL -->
+    <section id="solucao" class="py-20 border-t border-slate-800/60 bg-slate-900/40">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-xs uppercase font-bold tracking-widest text-teal-400 mb-2">A Abordagem do DiaLeve</h2>
+                <h3 class="text-3xl sm:text-4xl font-bold text-white">Apenas 3 Coisas por Dia. Nada Mais.</h3>
+                <p class="text-slate-400 mt-3 max-w-2xl mx-auto">
+                    Troque as listas infinitas por uma interface que protege seu tempo e remaneja imprevistos automaticamente.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="glass-card p-6 rounded-2xl border-slate-800 hover:border-indigo-500/40 …
+            </script>
+</body>
+</html>
